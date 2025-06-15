@@ -10,13 +10,18 @@ const port = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: process.env.CLIENT_URL,
+  origin: '*', // For development, we'll allow all origins
   credentials: true
 }));
 app.use(express.json());
 
+// Root route handler
+app.get('/', (req, res) => {
+  res.json({ message: 'Marathon Management System API is running' });
+});
+
 // MongoDB Connection
-mongoose.connect(process.env.MONGO_URI)
+mongoose.connect(process.env.MONGODB_URI) // Changed from MONGO_URI to MONGODB_URI
   .then(() => console.log('Connected to MongoDB'))
   .catch((err) => console.error('Could not connect to MongoDB:', err));
 
